@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,48 +9,59 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class BasicController {
 
-    // 처음 접속 시, 회원가입 페이지로 이동 (http://localhost:8080)
+    @Autowired
+    private SiteUserRepository userRepository;
+
+    // 초기 페이지 (회원가입)
     @GetMapping("/")
     public String showRegisterPage() {
         return "register.html";
     }
 
-    // 회원가입 페이지를 보여주는 GET 요청
-    @GetMapping("/register")
-    public String getRegisterPage() {
-        return "register.html";
-    }
-
-    // 회원가입 요청을 처리하고, 로그인 페이지로 이동
+    // 회원가입 요청 처리
     @PostMapping("/register")
     public String processRegister(@RequestParam String username, @RequestParam String password) {
-        // 실제로는 이 곳에서 데이터베이스에 사용자 정보를 저장합니다.
-        System.out.println("새로운 사용자 가입: " + username);
+        // 새로운 User 객체 생성
+        SiteUser newUser = new SiteUser(username, password);
+
+        // UserRepository를 사용하여 데이터베이스에 저장하고,
+        // 저장된 객체를 savedUser 변수에 담습니다.
+        SiteUser savedUser = userRepository.save(newUser); // <-- 이 부분이 핵심입니다.
+
+        System.out.println("--- 회원가입 데이터 저장 성공 ---");
+        System.out.println("저장된 사용자 이름: " + savedUser.getUsername());
+        System.out.println("저장된 비밀번호: " + savedUser.getPassword());
+        System.out.println("----------------------------------------");
+
         // 가입 후 로그인 페이지로 리다이렉트
-        return "redirect:/login";
+        return "redirect:/login.html";
     }
 
-    // 로그인 페이지를 보여주는 GET 요청
-    @GetMapping("/login")
+    // 로그인 페이지 보여주기
+    @GetMapping("/login.html")
     public String getLoginPage() {
         return "login.html";
     }
 
-    // 로그인 요청을 처리하고, 결과 페이지로 이동
+    // 로그인 요청 처리
     @PostMapping("/login")
     public String processLogin(@RequestParam String username, @RequestParam String password) {
-        // 간단한 예시: "admin"과 "1234"일 경우 성공으로 간주
-        if ("admin".equals(username) && "1234".equals(password)) {
-            // 로그인 성공 시 결과 페이지로 이동
-            return "redirect:/success";
+        SiteUser user = userRepository.findById(username).orElse(null);
+
+        if (user != null && user.getPassword().equals(password)) {
+            return "redirect:/success.html";
         }
-        // 로그인 실패 시 다시 로그인 페이지로
-        return "redirect:/login";
+        return "redirect:/login.html";
     }
 
-    // 성공 결과 페이지를 보여주는 GET 요청
-    @GetMapping("/success")
+    // 성공/실패 페이지들
+    @GetMapping("/success.html")
     public String showSuccessPage() {
-        return "result success.html";
+        return "success.html";
+    }
+
+    @GetMapping("/fail.html")
+    public String showFailPage() {
+        return "fail.html";
     }
 }
