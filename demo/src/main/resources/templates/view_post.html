@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${post.title}">게시글 보기</title>
+</head>
+<body>
+<h2 th:text="${post.title}">게시글 제목</h2>
+<p th:text="${post.content}">게시글 내용입니다.</p>
+<a href="/main">목록으로</a>
+</body>
+</html>

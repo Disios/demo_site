@@ -44,7 +44,7 @@ public class BasicController {
         SiteUser user = userRepository.findById(username).orElse(null);
 
         if (user != null && user.getPassword().equals(password)) {
-            return "redirect:/success";
+            return "redirect:/main";
         }
         return "redirect:/fail";
     }
@@ -53,12 +53,6 @@ public class BasicController {
     @GetMapping("/register_success")
     public String showRegisterSuccessPage() {
         return "register_success.html";
-    }
-
-    // 성공/실패 페이지들
-    @GetMapping("/success")
-    public String showSuccessPage() {
-        return "success.html";
     }
 
     @GetMapping("/fail")
