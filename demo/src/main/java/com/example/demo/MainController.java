@@ -9,11 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-// 임시 세션 사용자 클래스를 사용합니다.
-// 이 클래스가 com.example.demo 패키지에 SessionUser.java 파일로 존재해야 합니다.
-// class SessionUser { ... } 는 별도 파일로 분리되어 있다고 가정합니다.
-
-
 @Controller
 public class MainController {
 
@@ -28,10 +23,7 @@ public class MainController {
     // 메인 페이지 (게시글 목록 및 페이지네이션)
     @GetMapping("/main")
     public String showMainPage(@RequestParam(defaultValue = "0") int page, Model model) {
-        // ID 기준 내림차순 정렬
         Pageable pageable = PageRequest.of(page, PAGE_SIZE, Sort.by("id").descending());
-
-        // 데이터가 없어도 스프링이 빈 Page 객체를 반환하므로 안전합니다.
         Page<Post> postPage = postRepository.findAll(pageable);
 
         model.addAttribute("postPage", postPage);
@@ -51,6 +43,7 @@ public class MainController {
     public String savePost(@RequestParam String title,
                            @RequestParam String content) {
 
+        // SessionUser를 사용하여 작성자 이름 참조 (오류 발생 지점)
         String authorName = SessionUser.getLoggedInUsername();
 
         Post newPost = new Post(title, content, authorName);
@@ -81,6 +74,7 @@ public class MainController {
             return "redirect:/fail";
         }
 
+        // SessionUser를 사용하여 작성자 이름 참조 (오류 발생 지점)
         String authorName = SessionUser.getLoggedInUsername();
 
         Comment newComment = new Comment(content, authorName, post);
