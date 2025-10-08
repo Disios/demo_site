@@ -1,9 +1,12 @@
 package com.example.demo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
+import java.util.List;
 
 @Entity
 public class Post {
@@ -11,15 +14,24 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    // 작성자 이름 필드 추가
+    private String authorName;
+
     private String title;
     private String content;
+
+    // 댓글 리스트 추가 (게시글 삭제 시 댓글도 함께 삭제되도록 CascadeType.ALL 설정)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments;
 
     public Post() {
     }
 
-    public Post(String title, String content) {
+    public Post(String title, String content, String authorName) {
         this.title = title;
         this.content = content;
+        this.authorName = authorName; // 생성자에도 추가
     }
 
     // Getters and setters
@@ -45,5 +57,21 @@ public class Post {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

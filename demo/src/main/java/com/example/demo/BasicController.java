@@ -41,12 +41,18 @@ public class BasicController {
     // 로그인 요청 처리
     @PostMapping("/login")
     public String processLogin(@RequestParam String username, @RequestParam String password) {
+        // 1. 사용자 ID로 데이터베이스에서 사용자 정보를 조회
         SiteUser user = userRepository.findById(username).orElse(null);
 
+        // 2. 사용자가 존재하고 비밀번호가 일치하면
         if (user != null && user.getPassword().equals(password)) {
+
+            // 로그인 성공 시 메인 커뮤니티 페이지로 이동하도록 수정
             return "redirect:/main";
+
         }
-        return "redirect:/fail";
+        // 3. 실패하면 로그인 페이지로 다시 리다이렉트
+        return "redirect:/fail.html"; // fail.html 대신 login.html로 리다이렉트하는 것이 일반적이지만, 현재 fail.html로 설정되어 있습니다.
     }
 
     // 회원가입 성공 페이지 보여주기

@@ -3,15 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <title>글 작성</title>
+    <style>
+        /* 버튼 공통 스타일 */
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            border: 1px solid transparent;
+        }
+        /* 저장 버튼 스타일 */
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        /* 취소 버튼 (보조 버튼) 스타일 */
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            border-color: #6c757d;
+            margin-left: 10px; /* 저장 버튼과 간격 */
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        .form-actions {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-<h2>글 작성</h2>
+<h2>새 게시글 작성</h2>
 <form action="/write" method="post">
     <label for="title">제목:</label><br>
-    <input type="text" id="title" name="title"><br><br>
+    <input type="text" id="title" name="title" required><br><br>
     <label for="content">내용:</label><br>
-    <textarea id="content" name="content"></textarea><br><br>
-    <input type="submit" value="저장">
+    <textarea id="content" name="content" rows="10" required></textarea><br><br>
+
+    <div class="form-actions">
+        <!-- 저장 버튼 (input type="submit"에 클래스 적용) -->
+        <input type="submit" value="저장" class="btn btn-primary">
+
+        <!-- 취소 링크를 버튼 형식으로 변경 -->
+        <a href="/main" class="btn btn-secondary">취소</a>
+    </div>
 </form>
 </body>
 </html>

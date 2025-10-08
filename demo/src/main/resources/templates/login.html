@@ -3,18 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <title>로그인</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            width: 100%;
+            background-color: #5cb85c;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #4cae4c;
+        }
+        .link-area {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .link-area a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        .link-area a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-<h2>로그인</h2>
-<form action="/login" method="post">
-    <label for="username">사용자 이름:</label><br>
-    <input type="text" id="username" name="username"><br><br>
-    <label for="password">비밀번호:</label><br>
-    <input type="password" id="password" name="password"><br><br>
-    <input type="submit" value="로그인">
-</form>
-<p>
-    <a href="/register">회원가입</a>
-</p>
+<div class="container">
+    <h2>로그인</h2>
+    <form action="/login" method="post">
+        <label for="username">사용자 이름:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">비밀번호:</label>
+        <input type="password" id="password" name="password" required>
+
+        <input type="submit" value="로그인">
+    </form>
+    <div class="link-area">
+        <a href="/register">회원가입</a>
+    </div>
+</div>
 </body>
 </html>
