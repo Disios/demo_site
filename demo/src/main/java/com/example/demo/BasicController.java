@@ -35,7 +35,7 @@ public class BasicController {
         System.out.println("저장된 비밀번호: " + savedUser.getPassword());
         System.out.println("----------------------------------------");
 
-        return "redirect:/register_success.html";
+        return "redirect:/register_success";
     }
 
     // 로그인 요청 처리
@@ -46,7 +46,7 @@ public class BasicController {
         if (user != null && user.getPassword().equals(password)) {
             return "redirect:/success";
         }
-        return "redirect:/login.html";
+        return "redirect:/fail";
     }
 
     // 회원가입 성공 페이지 보여주기
